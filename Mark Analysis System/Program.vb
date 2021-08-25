@@ -3,13 +3,15 @@ Imports System
 Module Program
     Sub Main()
         Dim ProgramStatus As String = "running" 'condition for program to keep running
-        Dim topUserSelection As String = "-1" 'user selection (selection)
+        Dim UserSelection As String = "-1" 'user selection (selection)
         Dim nd As String = "-1,-1,-1,-1" 'new student data (New Data) in format of "id,E_score,M_score,S_score"
         Dim validationResults As String = "unvalidated" 'A valid or invalid check for data input by user
         While ProgramStatus = "running"
-            MenuPrompt(topUserSelection)
+            LineBreak()
+            MenuPrompt(UserSelection)
+            LineBreak()
 
-            If topUserSelection = "1" Then
+            If UserSelection = "1" Then
                 InputDataPrompt(nd)
                 ValidateData(nd, validationResults)
                 If validationResults <> "valid" Then 'print error
@@ -17,7 +19,7 @@ Module Program
                     Console.WriteLine(validationResults)
                     Console.ResetColor()
                 End If
-            ElseIf topUserSelection = "-1" Then 'exit program
+            ElseIf UserSelection = "-1" Then 'exit program
                 Console.WriteLine("Exiting Program...")
                 ProgramStatus = "stopped"
             Else 'invalid input Then print error and loops back
@@ -30,13 +32,15 @@ Module Program
     End Sub
 
     Public Sub MenuPrompt(ByRef selection As String)
-        Dim options As Array = {"1. Input data for a student", "2.", "3.", "-1. Exit"}
+        Dim options As Array = {"1. Input data for a student", "2.Unavailable", "3.Unavailable", "-1. Exit"}
 
         Dim i As Integer = 0
-        Do While i <= 2
+        Dim OptionNumbers As Integer = 4
+        Do While i < OptionNumbers
             Console.WriteLine(options(i))
             i += 1
         Loop
+        LineBreak()
 
         Console.WriteLine("Enter option number to select option(eg. 1 for option 1. or -1 to exit.)")
         selection = Console.ReadLine()
@@ -45,7 +49,7 @@ Module Program
     Public Sub InputDataPrompt(ByRef NewData)
         Console.WriteLine("Input data for a student in the following format:")
         Console.WriteLine("    ID, Result_English, Result_Maths, Result_Science")
-        Console.WriteLine("    (e.g. 20300,80,90,100")
+        Console.WriteLine("    (e.g. 20300,80,90,100)")
         NewData = Console.ReadLine()
     End Sub
 
@@ -98,6 +102,10 @@ Module Program
 
     End Sub
 
+    'A linebreak function existing purely for visuals.
+    Public Sub LineBreak()
+        Console.WriteLine("")
+    End Sub
     Public Class Students
 
     End Class
