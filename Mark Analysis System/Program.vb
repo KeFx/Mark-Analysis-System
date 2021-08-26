@@ -3,17 +3,15 @@ Imports System
 Module Program
     Sub Main()
         Dim ProgramStatus As String = "running" 'condition for program to keep running
-        Dim UserSelection As String = "-1" 'user selection (selection)
-        Dim nd As String = "-1,-1,-1,-1" 'new student data (New Data) in format of "id,E_score,M_score,S_score"
         Dim validationResults As String = "unvalidated" 'A valid or invalid check for data input by user
         While ProgramStatus = "running"
             LineBreak()
-            MenuPrompt(UserSelection)
+            Dim UserSelection As String = MenuPrompt()
             LineBreak()
 
             If UserSelection = "1" Then
-                InputDataPrompt(nd)
-                ValidateData(nd, validationResults)
+                Dim NewData As String = InputDataPrompt()
+                ValidateData(NewData, validationResults)
                 If validationResults <> "valid" Then 'print error
                     Console.ForegroundColor = ConsoleColor.Red
                     Console.WriteLine(validationResults)
@@ -31,7 +29,7 @@ Module Program
         End While
     End Sub
 
-    Public Sub MenuPrompt(ByRef selection As String)
+    Public Function MenuPrompt()
         Dim options As Array = {"1. Input data for a student", "2.Unavailable", "3.Unavailable", "-1. Exit"}
 
         Dim i As Integer = 0
@@ -43,15 +41,15 @@ Module Program
         LineBreak()
 
         Console.WriteLine("Enter option number to select option(eg. 1 for option 1. or -1 to exit.)")
-        selection = Console.ReadLine()
-    End Sub
+        Return Console.ReadLine()
+    End Function
 
-    Public Sub InputDataPrompt(ByRef NewData)
+    Public Function InputDataPrompt()
         Console.WriteLine("Input data for a student in the following format:")
         Console.WriteLine("    ID, Result_English, Result_Maths, Result_Science")
         Console.WriteLine("    (e.g. 20300,80,90,100)")
-        NewData = Console.ReadLine()
-    End Sub
+        Return Console.ReadLine()
+    End Function
 
     Public Sub ValidateData(ByVal data As String, ByRef validationResults As String)
         validationResults = "valid" 'initialize validation
