@@ -3,7 +3,6 @@ Imports System
 Module Program
     Sub Main()
         Dim ProgramStatus As String = "running" 'condition for program to keep running
-        Dim validationResults As String = "Unvalidated" 'A valid or invalid check for data input by user
         While ProgramStatus = "running"
 
             'Brings up the selections menu
@@ -13,7 +12,7 @@ Module Program
 
             If UserSelection = "1" Then
                 Dim NewData As String = InputDataPrompt()
-                validationResults = ValidateData(NewData)
+                Dim validationResults As String = ValidateData(NewData)
                 If validationResults <> "valid" Then 'print error
                     Console.ForegroundColor = ConsoleColor.Red
                     Console.WriteLine(validationResults)
