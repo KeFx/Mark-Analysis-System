@@ -12,12 +12,14 @@ Module Program
 
             If UserSelection = "1" Then
                 Dim NewData As String = InputDataPrompt()
-                Dim validationResults As String = ValidateData(NewData)
-                If validationResults <> "valid" Then 'print error
+                Dim ValidationResults As String = ValidateData(NewData)
+                If ValidationResults <> "valid" Then 'print error
                     Console.ForegroundColor = ConsoleColor.Red
-                    Console.WriteLine(validationResults)
+                    Console.WriteLine(ValidationResults)
                     Console.ResetColor()
                 End If
+                Dim ModifiedData As String = ModifyData(NewData)
+                StoreData(ModifiedData)
             ElseIf UserSelection = "-1" Then 'exit program
                 Console.WriteLine("Exiting Program...")
                 ProgramStatus = "stopped"
@@ -31,7 +33,7 @@ Module Program
     End Sub
 
     Public Function MenuPrompt()
-        Dim options As Array = {"1. Input data for a student", "2.Unavailable", "3.Unavailable", "-1. Exit"}
+        Dim options As Array = {"1. Input data for a student", "2. Unavailable", "3. Unavailable", "-1. Exit"}
 
         Dim i As Integer = 0
         Dim OptionNumbers As Integer = options.Length
@@ -41,7 +43,7 @@ Module Program
         Loop
         LineBreak()
 
-        Console.WriteLine("Enter option number to select option(eg. 1 for option 1. or -1 to exit.)")
+        Console.WriteLine("Enter option number to select option(eg. 1 for option 1. or -1 to exit): ")
         Return Console.ReadLine()
     End Function
 
@@ -53,7 +55,6 @@ Module Program
     End Function
 
     Public Function ValidateData(data As String)
-        Dim ValidationResults = "valid" 'initialize validation
         Dim SubData As New Dictionary(Of Integer, Integer)()
         Dim SplitedData As String() = data.Split(New Char() {","c})
 
@@ -65,8 +66,7 @@ Module Program
             End If
         Next
         If Counter <> 3 Then
-            ValidationResults = "Invalid input: Wrong data format"
-            Return ValidationResults
+            Return "Invalid input: Wrong data format"
         End If
 
         'Checks that each subdata inputed is Integer with Try(Integer.Parse)
@@ -75,8 +75,7 @@ Module Program
             Try
                 SubData(i) = Integer.Parse(sd)
             Catch
-                ValidationResults = "Invalid input: subdata should be integers"
-                Return ValidationResults
+                Return "Invalid input: subdata should be integers"
             End Try
             i += 1
         Next
@@ -84,8 +83,7 @@ Module Program
         'Checks if student ID number is 5 digit long
         Const STUDENT_ID_LENGTH As Integer = 5
         If SubData(0).ToString.Length <> STUDENT_ID_LENGTH Then 'Invalid ID input
-            ValidationResults = "Invalid student ID number, ID number should be a 5 digit Integer"
-            Return ValidationResults
+            Return "Invalid student ID number, ID number should be a 5 digit Integer"
         End If
 
         'Checks that the results inputed are integers between 0 and 100
@@ -93,13 +91,28 @@ Module Program
         Const RESULT_MIN As Integer = 0
         For s As Integer = 1 To 3
             If SubData(s) > RESULT_MAX Or SubData(s) < RESULT_MIN Then
-                ValidationResults = "Invalid Result: result must be an Integer between 100 and 0"
-                Return ValidationResults
+                Return "Invalid Result: result must be an Integer between 100 and 0"
             End If
         Next
 
-        Return ValidationResults
+        Return "valid"
     End Function
+
+    Public Function ModifyData(NewData As String)
+
+    End Function
+
+    Public Sub StoreData(ModifiedData As String)
+
+    End Sub
+
+    Public Function CalculateData()
+
+    End Function
+
+    Public Sub DisplayData()
+
+    End Sub
 
     'A linebreak function existing purely for visuals.
     Public Sub LineBreak()
