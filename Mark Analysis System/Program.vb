@@ -19,10 +19,7 @@ Module Program
                     Console.ResetColor()
                 Else
                     Dim ModifiedData As String = ModifyData(NewData)
-                    StoreData(ModifiedData)
-                    Console.ForegroundColor = ConsoleColor.Green
-                    Console.WriteLine("data is valid and stored")
-                    Console.ResetColor()
+                    StoreData(ModifiedData, DataBase)
                 End If
             ElseIf UserSelection = "-1" Then 'exit program
                 Console.WriteLine("Exiting Program...")
@@ -132,9 +129,24 @@ Module Program
 
     End Function
 
-    Public Sub StoreData(ModifiedData As String)
-        Console.WriteLine(ModifiedData)
+    Public Sub StoreData(ModifiedData As String, ByRef DataBase As Dictionary(Of String, String))
+        Dim SubDatas As New Dictionary(Of String, String)()
+        Dim SplitedData As String() = ModifiedData.Split(New Char() {","c})
+
+        Dim i As Integer = 0
+        For Each sd As String In SplitedData
+            SubDatas(i) = sd
+            i += 1
+        Next
+
+        DataBase(SubDatas(0)) = ModifiedData
+
+        Console.ForegroundColor = ConsoleColor.Green
+        Console.WriteLine("Data is valid and stored")
+        Console.ResetColor()
     End Sub
+
+    Public DataBase As New Dictionary(Of String, String)
 
     Public Function CalculateDataAverage()
 
@@ -148,6 +160,4 @@ Module Program
     Public Sub LineBreak()
         Console.WriteLine("")
     End Sub
-
-    Public O As New Object
 End Module
