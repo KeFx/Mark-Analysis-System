@@ -17,9 +17,13 @@ Module Program
                     Console.ForegroundColor = ConsoleColor.Red
                     Console.WriteLine(ValidationResults)
                     Console.ResetColor()
+                Else
+                    Dim ModifiedData As String = ModifyData(NewData)
+                    StoreData(ModifiedData)
+                    Console.ForegroundColor = ConsoleColor.Green
+                    Console.WriteLine("data is valid and stored")
+                    Console.ResetColor()
                 End If
-                Dim ModifiedData As String = ModifyData(NewData)
-                StoreData(ModifiedData)
             ElseIf UserSelection = "-1" Then 'exit program
                 Console.WriteLine("Exiting Program...")
                 ProgramStatus = "stopped"
@@ -99,14 +103,40 @@ Module Program
     End Function
 
     Public Function ModifyData(NewData As String)
+        Dim SubDatas As New Dictionary(Of Integer, Integer)()
+        Dim SplitedData As String() = NewData.Split(New Char() {","c})
+
+        Dim i As Integer = 0
+        For Each sd As String In SplitedData
+            SubDatas(i) = Integer.Parse(sd)
+            i += 1
+        Next
+
+        For s As Integer = 1 To 3
+            If SubDatas(s) < 20 Then
+                SubDatas(s) = 20
+            End If
+        Next
+
+        Dim ModifiedData As String = SubDatas(0).ToString()
+
+        For s As Integer = 1 To 3
+            ModifiedData += "," + SubDatas(s).ToString()
+        Next
+
+        Console.ForegroundColor = ConsoleColor.Blue
+        Console.WriteLine("Some results were under 20 and has been converted to 20.")
+        Console.ResetColor()
+
+        Return ModifiedData
 
     End Function
 
     Public Sub StoreData(ModifiedData As String)
-
+        Console.WriteLine(ModifiedData)
     End Sub
 
-    Public Function CalculateData()
+    Public Function CalculateDataAverage()
 
     End Function
 
@@ -118,7 +148,6 @@ Module Program
     Public Sub LineBreak()
         Console.WriteLine("")
     End Sub
-    Public Class Students
 
-    End Class
+    Public O As New Object
 End Module
