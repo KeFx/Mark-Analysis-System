@@ -1,5 +1,6 @@
 # Mark-Analysis-System
 A system that records student marks and provides a search feature.
+Written by KeFx for school work.
 
 How to run: 
  - Clone the whole repo
