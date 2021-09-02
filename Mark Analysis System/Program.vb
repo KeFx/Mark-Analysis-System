@@ -22,8 +22,9 @@ Module Program
                     StoreData(ModifiedData, DataBase)
                 End If
             ElseIf UserSelection = "2" Then
-                CalculateDataAverage()
+                Console.ForegroundColor = ConsoleColor.Yellow
                 DisplayData()
+                Console.ResetColor()
             ElseIf UserSelection = "3" Then
                 SearchData()
             ElseIf UserSelection = "-1" Then 'exit program
@@ -39,7 +40,10 @@ Module Program
     End Sub
 
     Public Function MenuPrompt()
-        Dim options As Array = {"1. Input data for a student", "2. Dsiplay all data", "3. Search for a student's results by ID number", "-1. Exit"}
+        Dim options As Array = {"1. Input data for a student",
+                                "2. Dsiplay all data",
+                                "3. Search for a student's results by ID number", "-1. Exit"
+                                }
 
         Dim i As Integer = 0
         Dim OptionNumbers As Integer = options.Length
@@ -54,9 +58,9 @@ Module Program
     End Function
 
     Public Function InputDataPrompt()
-        Console.WriteLine("Input data for a student in the following format:")
+        Console.WriteLine("Input data for a student in the following format :")
         Console.WriteLine("    ID, Result_English, Result_Maths, Result_Science")
-        Console.WriteLine("    (e.g. 20300,80,90,100)")
+        Console.WriteLine("    (e.g. 20300,80,90,100) :")
         Return Console.ReadLine()
     End Function
 
@@ -135,6 +139,8 @@ Module Program
 
     End Function
 
+    Public DataBase As New Dictionary(Of String, String)
+
     Public Sub StoreData(ModifiedData As String, ByRef DataBase As Dictionary(Of String, String))
         Dim SubDatas As New Dictionary(Of String, String)()
         Dim SplitedData As String() = ModifiedData.Split(New Char() {","c})
@@ -152,36 +158,34 @@ Module Program
         Console.ResetColor()
     End Sub
 
-    Public DataBase As New Dictionary(Of String, String)
-
     Public Function CalculateDataAverage()
+        ' "MAX1, MIN1, AVG1, MAX2, MAX3"
+    End Function
 
+    Public Function ParseOneRecord(record As String)
+        Return record.Split(",")
     End Function
 
     Public Sub DisplayData()
-        DataBase.Add("12345", "12345,81,91,21")
-        DataBase.Add("12445", "12445,1,99,21")
-        DataBase.Add("23431", "23431,81,91,21")
-
-        printOneLine("ID", "English", "Maths", "Science")
+        PrintOneLine("ID", "English", "Maths", "Science")
+        Console.WriteLine(("").PadRight(52, "-"))
         For Each record As KeyValuePair(Of String, String) In DataBase
-            printOneLine(record.Key, record.Value.Split(",")(1),
+            PrintOneLine(record.Key, record.Value.Split(",")(1),
                          record.Value.Split(",")(2),
                          record.Value.Split(",")(3))
 
         Next
 
-
     End Sub
 
-    Public Sub printOneLine(col1 As String,
+    Public Sub PrintOneLine(col1 As String,
                             col2 As String,
                             col3 As String,
                             col4 As String)
-        Console.WriteLine(col1.PadRight(20, " ") +
-                          col2.PadRight(20, " ") +
-                          col3.PadRight(20, " ") +
-                          col4.PadRight(20, " ")
+        Console.WriteLine(col1.PadRight(13, " ") +
+                          col2.PadRight(13, " ") +
+                          col3.PadRight(13, " ") +
+                          col4.PadRight(13, " ")
                           )
 
     End Sub
@@ -191,7 +195,9 @@ Module Program
         Console.WriteLine("Displayed in format of (ID, Result_English, Result_Maths, Result_Science)")
         Dim SearchedID As String = Console.ReadLine()
         Try
-            Console.WriteLine("Student " + SearchedID + " : " + DataBase(SearchedID))
+            Console.ForegroundColor = ConsoleColor.Yellow
+            Console.WriteLine("Student " + SearchedID + "'s result details : " + DataBase(SearchedID))
+            Console.ResetColor()
         Catch
             Console.ForegroundColor = ConsoleColor.Red
             Console.WriteLine("Student '" + SearchedID + "' Not Found")
