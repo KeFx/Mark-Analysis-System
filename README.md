@@ -9,6 +9,7 @@ How to run:
  - Run the solution by clicking the run button.
 
  ![image](https://user-images.githubusercontent.com/62463532/131929563-78a1fb92-5591-4868-9a94-3fe1196d77bb.png)
+ 
 *Otherwise the source code is under folder "Mark Analysis System", called "Program.vb"
 
 (*note: To edit a students' results that has been stored already just enter data like normal and it will overwrite.)
