@@ -21,6 +21,11 @@ Module Program
                     Dim ModifiedData As String = ModifyData(NewData)
                     StoreData(ModifiedData, DataBase)
                 End If
+            ElseIf UserSelection = "2" Then
+                CalculateDataAverage()
+                DisplayData()
+            ElseIf UserSelection = "3" Then
+                SearchData()
             ElseIf UserSelection = "-1" Then 'exit program
                 Console.WriteLine("Exiting Program...")
                 ProgramStatus = "stopped"
@@ -34,7 +39,7 @@ Module Program
     End Sub
 
     Public Function MenuPrompt()
-        Dim options As Array = {"1. Input data for a student", "2. Unavailable", "3. Unavailable", "-1. Exit"}
+        Dim options As Array = {"1. Input data for a student", "2. Dsiplay all data", "3. Search for a student's results by ID number", "-1. Exit"}
 
         Dim i As Integer = 0
         Dim OptionNumbers As Integer = options.Length
@@ -121,9 +126,10 @@ Module Program
             ModifiedData += "," + SubDatas(s).ToString()
         Next
 
-        Console.ForegroundColor = ConsoleColor.Blue
-        Console.WriteLine("Some results were under 20 and has been converted to 20.")
-        Console.ResetColor()
+
+        'Console.ForegroundColor = ConsoleColor.Blue
+        'Console.WriteLine("Some results were under 20 and has been converted to 20.")'
+        'Console.ResetColor() '
 
         Return ModifiedData
 
@@ -153,7 +159,44 @@ Module Program
     End Function
 
     Public Sub DisplayData()
+        DataBase.Add("12345", "12345,81,91,21")
+        DataBase.Add("12445", "12445,1,99,21")
+        DataBase.Add("23431", "23431,81,91,21")
 
+        printOneLine("ID", "English", "Maths", "Science")
+        For Each record As KeyValuePair(Of String, String) In DataBase
+            printOneLine(record.Key, record.Value.Split(",")(1),
+                         record.Value.Split(",")(2),
+                         record.Value.Split(",")(3))
+
+        Next
+
+
+    End Sub
+
+    Public Sub printOneLine(col1 As String,
+                            col2 As String,
+                            col3 As String,
+                            col4 As String)
+        Console.WriteLine(col1.PadRight(20, " ") +
+                          col2.PadRight(20, " ") +
+                          col3.PadRight(20, " ") +
+                          col4.PadRight(20, " ")
+                          )
+
+    End Sub
+
+    Private Sub SearchData()
+        Console.WriteLine("Enter student ID number to get specific results: ")
+        Console.WriteLine("Displayed in format of (ID, Result_English, Result_Maths, Result_Science)")
+        Dim SearchedID As String = Console.ReadLine()
+        Try
+            Console.WriteLine("Student " + SearchedID + " : " + DataBase(SearchedID))
+        Catch
+            Console.ForegroundColor = ConsoleColor.Red
+            Console.WriteLine("Student '" + SearchedID + "' Not Found")
+            Console.ResetColor()
+        End Try
     End Sub
 
     'A linebreak function existing purely for visuals.
