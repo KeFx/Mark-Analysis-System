@@ -1,5 +1,5 @@
 # Mark-Analysis-System
-A system that records student marks, displays them and provides a search feature.
+A system that records student marks, displays them and provides a search feature. <br/>
 Written by KeFx for school work.
 
 How to run: 
@@ -12,5 +12,5 @@ How to run:
  
 *Otherwise the source code is under folder "Mark Analysis System", called "Program.vb"
 
-More specific program features can be found in features_doc.docx
-- [x] (*note: To edit a students' results that has been stored already just enter data like normal and it will overwrite.)
+More specific program features can be found in features_doc.docx <br/>
+(*note: To edit a students' results that has been stored already just enter data like normal and it will overwrite.)*
