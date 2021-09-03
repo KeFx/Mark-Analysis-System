@@ -168,7 +168,7 @@ Module Program
 
     Public Sub DisplayData()
         PrintOneLine("ID", "English", "Maths", "Science")
-        Console.WriteLine(("").PadRight(52, "-"))
+        RuleOff(52, "-")
         For Each record As KeyValuePair(Of String, String) In DataBase
             PrintOneLine(record.Key, record.Value.Split(",")(1),
                          record.Value.Split(",")(2),
@@ -176,6 +176,10 @@ Module Program
 
         Next
 
+    End Sub
+
+    Private Sub RuleOff(Length As Integer, Symbol As String)
+        Console.WriteLine(("").PadRight(Length, Symbol))
     End Sub
 
     Public Sub PrintOneLine(col1 As String,
