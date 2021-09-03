@@ -13,4 +13,4 @@ How to run:
 *Otherwise the source code is under folder "Mark Analysis System", called "Program.vb"
 
 More specific program features can be found in features_doc.docx
-(*note: To edit a students' results that has been stored already just enter data like normal and it will overwrite.)
+- [x] (*note: To edit a students' results that has been stored already just enter data like normal and it will overwrite.)
