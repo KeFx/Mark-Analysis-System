@@ -5,7 +5,7 @@ Written by KeFx for school work.
 ## Program features and evidence documentation
 *(This file contains all program usage and features.)* <br/>
 ### Main Menu
-This program is a Visual Basic console application that infinitely loops a menu prompt when run and *only* exits <br/>
+This program is a Visual Basic console application that indefinitely loops a menu prompt when run and *only* exits <br/>
 when user enters the option "-1". Except for that, there are three available action options:<br/>
 1. Enter new data for a student,
 2. Display all data with average, min and max,
