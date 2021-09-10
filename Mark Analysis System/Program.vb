@@ -1,6 +1,47 @@
 Imports System
 
 Module Program
+
+    Public Class StudentRecord
+        Public Property ID As Integer
+        Public Property Math As Integer
+        Public Property English As Integer
+        Public Property Science As Integer
+
+        Private Property IsScoreModified As Boolean = False
+
+        Public Shared Function parseRecordFromString(InputString As String)
+            Dim newStudentRecord = New StudentRecord()
+            newStudentRecord.ID = Integer.Parse(InputString.Split(",")(0))
+            newStudentRecord.English = Integer.Parse(InputString.Split(",")(1))
+            newStudentRecord.Math = Integer.Parse(InputString.Split(",")(2))
+            newStudentRecord.Science = Integer.Parse(InputString.Split(",")(3))
+
+            Return newStudentRecord
+        End Function
+
+        Public Function ModifyData()
+            Me.English = Me.modifyOneSubject(Me.English)
+            Me.Math = Me.modifyOneSubject(Me.Math)
+            Me.Science = Me.modifyOneSubject(Me.Science)
+
+            If Me.IsScoreModified Then
+                PromptWithColor(ConsoleColor.Red, "Some results were under 20 and has been converted to 20.")
+            End If
+
+            Return Me
+        End Function
+
+        Private Function modifyOneSubject(score As Integer)
+            If score < 20 Then
+                Me.IsScoreModified = True
+                Return 20
+            End If
+
+            Return score
+        End Function
+    End Class
+
     Sub Main()
         Dim ProgramStatus As String = "running" 'condition for program to keep running
         While ProgramStatus = "running"
@@ -13,14 +54,16 @@ Module Program
             If UserSelection = "1" Then
                 Dim NewData As String = InputDataPrompt()
                 Dim ValidationResults As String = ValidateData(NewData)
+
+
+
                 If ValidationResults <> "valid" Then 'print error
                     Console.ForegroundColor = ConsoleColor.Red
                     Console.WriteLine(ValidationResults)
                     Console.ResetColor()
                 Else
-                    Dim ModifiedData As String = ModifyData(NewData)
-                    StoreData(ModifiedData, DataBase)
-                    CalculateDataAverage()
+                    ' Dim ModifiedData As String = ModifyData(NewData)
+                    StudentRecords.Add(StudentRecord.parseRecordFromString(NewData).ModifyData())
                 End If
             ElseIf UserSelection = "2" Then
                 Console.ForegroundColor = ConsoleColor.Yellow
@@ -39,7 +82,6 @@ Module Program
 
         End While
     End Sub
-
     Public Function MenuPrompt()
         Dim options As Array = {"1. Input data for a student",
                                 "2. Dsiplay all data",
@@ -141,7 +183,13 @@ Module Program
     End Function
 
     Public DataBase As New Dictionary(Of String, String)
+    Public StudentRecords As New List(Of StudentRecord)
 
+    Public Sub PromptWithColor(Color As ConsoleColor, Prompt As String)
+        Console.ForegroundColor = Color
+        Console.WriteLine(Prompt)
+        Console.ResetColor()
+    End Sub
     Public Sub StoreData(ModifiedData As String, ByRef DataBase As Dictionary(Of String, String))
         Dim SubDatas As New Dictionary(Of String, String)()
         Dim SplitedData As String() = ModifiedData.Split(New Char() {","c})
@@ -159,23 +207,29 @@ Module Program
         Console.ResetColor()
     End Sub
 
-    Public Function CalculateDataAverage()
-        Dim SplitedData As String() = ParseOneRecord("12345,1,2,50")
-    End Function
 
-    Public Function ParseOneRecord(record As String)
-        Return record.Split(",")
-    End Function
 
     Public Sub DisplayData()
         PrintOneLine("ID", "English", "Maths", "Science")
         RuleOff(52, "-")
-        For Each record As KeyValuePair(Of String, String) In DataBase
-            PrintOneLine(record.Key, record.Value.Split(",")(1),
-                         record.Value.Split(",")(2),
-                         record.Value.Split(",")(3))
+
+        Dim SumOfEnglish As Integer = 0
+        Dim AvgOfEnglish As Integer = 0
+        For Each record As StudentRecord In StudentRecords
+            SumOfEnglish += record.English
+            PrintOneLine(record.ID.ToString(),
+                         record.English.ToString(),
+                         record.Math.ToString(),
+                         record.Science.ToString())
         Next
 
+        If StudentRecords.Count > 0 Then
+            AvgOfEnglish = SumOfEnglish / StudentRecords.Count
+            PrintOneLine("AVERAGE",
+             AvgOfEnglish.ToString(),
+             "2",
+             "3")
+        End If
     End Sub
 
     Private Sub RuleOff(Length As Integer, Symbol As String)
@@ -186,6 +240,7 @@ Module Program
                             col2 As String,
                             col3 As String,
                             col4 As String)
+
         Console.WriteLine(col1.PadRight(13, " ") +
                           col2.PadRight(13, " ") +
                           col3.PadRight(13, " ") +
