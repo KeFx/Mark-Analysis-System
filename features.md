@@ -2,10 +2,10 @@
 A system that records student marks, displays them and provides a search feature. <br/>
 Written by KeFx for school work.
 
-## Program features documentation
+## Program features and evidence documentation
 *(This file contains all program usage and features.)* <br/>
 ### Main Menu
-The program is a Visual Basic console application that infinitely loops a menu prompt when run and *only* exits <br/>
+This program is a Visual Basic console application that infinitely loops a menu prompt when run and *only* exits <br/>
 when user enters the option "-1". Except for that, there are three available action options:<br/>
 1. Enter new data for a student,
 2. Display all data with average, min and max,
@@ -23,6 +23,23 @@ Where the program asks you to enter full data starting with student's ID number.
 simply enter full data again and the old data will be overwrite). Entering a valid data will have it stored in the program's database and<br/>
 the following is displayed:<br/>
 <img src="https://user-images.githubusercontent.com/62463532/132791601-8e1485bb-3d17-45a8-bdf6-d2da5610a0f4.png" width="450" height="130"><br/>
-*Note: Any results under 20 will be automatically converted to 20 before it is stored stored. (for evidence see Selection 2)*
+*Note: Any results under 20 will be automatically converted to 20 before it is stored stored. (for evidence see Selection 2)*<br/>
 
+**Validation evidence:**<br/>
+
+* Invalid Input data type:<br/>
+<img src="https://user-images.githubusercontent.com/62463532/132793196-dbe4b655-cdc3-4f9d-ac4f-f00b0bc4a235.png" width="450" height="130"><br/>
+
+* Invalid Input format:<br/>
+<img src="https://user-images.githubusercontent.com/62463532/132792574-f10ff23b-3451-4291-8a62-60064c6baec2.png" width="450" height="130"><br/>
+
+* Invalid ID number:<br/>
+<img src="https://user-images.githubusercontent.com/62463532/132792823-17b2b862-ca95-46bc-8b05-d6eccaf22cc8.png" width="450" height="130"><br/>
+
+* Invalid result data:<br/>
+<img src="https://user-images.githubusercontent.com/62463532/132793019-70945e0e-f8ce-495c-b5b3-9608aa946c97.png" width="450" height="130"><br/>
+
+
+### Selection 2
+Entering "2" from main menu prompt would display all 
 
