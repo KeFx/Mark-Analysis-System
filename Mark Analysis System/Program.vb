@@ -10,7 +10,7 @@ Module Program
 
         Private Property IsScoreModified As Boolean = False
 
-        Public Shared Function parseRecordFromString(InputString As String)
+        Public Shared Function ParseRecordFromString(InputString As String)
             Dim newStudentRecord = New StudentRecord()
             newStudentRecord.ID = Integer.Parse(InputString.Split(",")(0))
             newStudentRecord.English = Integer.Parse(InputString.Split(",")(1))
@@ -63,7 +63,7 @@ Module Program
                     Console.ResetColor()
                 Else
                     ' Dim ModifiedData As String = ModifyData(NewData)
-                    StudentRecords.Add(StudentRecord.parseRecordFromString(NewData).ModifyData())
+                    StudentRecords.Add(StudentRecord.ParseRecordFromString(NewData).ModifyData())
                 End If
             ElseIf UserSelection = "2" Then
                 Console.ForegroundColor = ConsoleColor.Yellow
