@@ -20,6 +20,7 @@ Module Program
                 Else
                     Dim ModifiedData As String = ModifyData(NewData)
                     StoreData(ModifiedData, DataBase)
+                    CalculateDataAverage()
                 End If
             ElseIf UserSelection = "2" Then
                 Console.ForegroundColor = ConsoleColor.Yellow
@@ -159,7 +160,7 @@ Module Program
     End Sub
 
     Public Function CalculateDataAverage()
-        ' "MAX1, MIN1, AVG1, MAX2, MAX3"
+        Dim SplitedData As String() = ParseOneRecord("12345,1,2,50")
     End Function
 
     Public Function ParseOneRecord(record As String)
@@ -173,7 +174,6 @@ Module Program
             PrintOneLine(record.Key, record.Value.Split(",")(1),
                          record.Value.Split(",")(2),
                          record.Value.Split(",")(3))
-
         Next
 
     End Sub
