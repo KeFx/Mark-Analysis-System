@@ -12,5 +12,5 @@ How to run:
  
 *Otherwise the source code is under folder "Mark Analysis System", called "Program.vb"
 
-More specific program features can be found in features.md <br/>
+More specific program features can be found in [features.md](https://github.com/KeFx/Mark-Analysis-System/blob/master/features.md) <br/>
 (*note: To edit a students' results that has been stored already just enter data like normal and it will overwrite.)*
