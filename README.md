@@ -4,6 +4,8 @@ Written by KeFx for school work.
 
 How to run: 
  - Clone the whole repo
+   - Dowload repo as zip here : [Click to Download](https://github.com/KeFx/Mark-Analysis-System/archive/refs/heads/master.zip)
+   - Unzip with your preferred unzipping tool to a preferred location 
  - Run Visual Studio
  - Open the solution file (.sln) under the repo with VS
  - Run the solution by clicking the run button.
