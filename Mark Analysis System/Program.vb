@@ -29,7 +29,7 @@ Module Program
             Me.Science = Me.ModifyOneSubject(Me.Science)
 
             If Me.IsScoreModified Then
-                PromptWithColor(ConsoleColor.Blue, "Some results were under 20 and has been converted to 20.")
+                PromptWithColor(ConsoleColor.Blue, "Note: Some results were under 20 and has been converted to 20")
             End If
 
             Return Me
@@ -61,6 +61,7 @@ Module Program
                     PromptWithColor(ConsoleColor.Red, ValidationResults)
                 Else
                     StudentRecords.Add(StudentRecord.ParseRecordFromString(NewData).ModifyData())
+                    PromptWithColor(ConsoleColor.Green, "Data is valid and stored")
                 End If
             ElseIf UserSelection = "2" Then
                 Console.ForegroundColor = ConsoleColor.Yellow
@@ -180,6 +181,8 @@ Module Program
             Dim AvgScience As Integer = StudentRecords.Average(Function(r) r.Science)
             Dim MaxScience As Integer = StudentRecords.Max(Function(r) r.Science)
             Dim MinScience As Integer = StudentRecords.Min(Function(r) r.Science)
+
+            RuleOff(52, "")
 
             PrintOneLine("AVERAGE",
              AvgEnglish.ToString(),
