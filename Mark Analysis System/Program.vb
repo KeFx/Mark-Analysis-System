@@ -1,7 +1,6 @@
 Imports System
 
 Module Program
-
     Public Class StudentRecord
         Public Property ID As Integer
         Public Property Math As Integer
@@ -10,7 +9,11 @@ Module Program
 
         Private Property IsScoreModified As Boolean = False
 
-        Public Shared Function ParseRecordFromString(InputString As String)
+        Public Overrides Function ToString() As String
+            Return String.Format("[{0}, {1}, {2}, {3}]", Me.ID, Me.English, Me.Math, Me.Science)
+        End Function
+
+        Public Shared Function ParseRecordFromString(InputString As String) As StudentRecord
             Dim newStudentRecord = New StudentRecord()
             newStudentRecord.ID = Integer.Parse(InputString.Split(",")(0))
             newStudentRecord.English = Integer.Parse(InputString.Split(",")(1))
@@ -21,18 +24,18 @@ Module Program
         End Function
 
         Public Function ModifyData()
-            Me.English = Me.modifyOneSubject(Me.English)
-            Me.Math = Me.modifyOneSubject(Me.Math)
-            Me.Science = Me.modifyOneSubject(Me.Science)
+            Me.English = Me.ModifyOneSubject(Me.English)
+            Me.Math = Me.ModifyOneSubject(Me.Math)
+            Me.Science = Me.ModifyOneSubject(Me.Science)
 
             If Me.IsScoreModified Then
-                PromptWithColor(ConsoleColor.Red, "Some results were under 20 and has been converted to 20.")
+                PromptWithColor(ConsoleColor.Blue, "Some results were under 20 and has been converted to 20.")
             End If
 
             Return Me
         End Function
 
-        Private Function modifyOneSubject(score As Integer)
+        Private Function ModifyOneSubject(score As Integer)
             If score < 20 Then
                 Me.IsScoreModified = True
                 Return 20
@@ -54,15 +57,9 @@ Module Program
             If UserSelection = "1" Then
                 Dim NewData As String = InputDataPrompt()
                 Dim ValidationResults As String = ValidateData(NewData)
-
-
-
                 If ValidationResults <> "valid" Then 'print error
-                    Console.ForegroundColor = ConsoleColor.Red
-                    Console.WriteLine(ValidationResults)
-                    Console.ResetColor()
+                    PromptWithColor(ConsoleColor.Red, ValidationResults)
                 Else
-                    ' Dim ModifiedData As String = ModifyData(NewData)
                     StudentRecords.Add(StudentRecord.ParseRecordFromString(NewData).ModifyData())
                 End If
             ElseIf UserSelection = "2" Then
@@ -82,9 +79,10 @@ Module Program
 
         End While
     End Sub
+
     Public Function MenuPrompt()
         Dim options As Array = {"1. Input data for a student",
-                                "2. Dsiplay all data",
+                                "2. Display all data",
                                 "3. Search for a student's results by ID number", "-1. Exit"
                                 }
 
@@ -151,38 +149,6 @@ Module Program
         Return "valid"
     End Function
 
-    Public Function ModifyData(NewData As String)
-        Dim SubDatas As New Dictionary(Of Integer, Integer)()
-        Dim SplitedData As String() = NewData.Split(New Char() {","c})
-
-        Dim i As Integer = 0
-        For Each sd As String In SplitedData
-            SubDatas(i) = Integer.Parse(sd)
-            i += 1
-        Next
-
-        For s As Integer = 1 To 3
-            If SubDatas(s) < 20 Then
-                SubDatas(s) = 20
-            End If
-        Next
-
-        Dim ModifiedData As String = SubDatas(0).ToString()
-
-        For s As Integer = 1 To 3
-            ModifiedData += "," + SubDatas(s).ToString()
-        Next
-
-
-        'Console.ForegroundColor = ConsoleColor.Blue
-        'Console.WriteLine("Some results were under 20 and has been converted to 20.")'
-        'Console.ResetColor() '
-
-        Return ModifiedData
-
-    End Function
-
-    Public DataBase As New Dictionary(Of String, String)
     Public StudentRecords As New List(Of StudentRecord)
 
     Public Sub PromptWithColor(Color As ConsoleColor, Prompt As String)
@@ -190,45 +156,47 @@ Module Program
         Console.WriteLine(Prompt)
         Console.ResetColor()
     End Sub
-    Public Sub StoreData(ModifiedData As String, ByRef DataBase As Dictionary(Of String, String))
-        Dim SubDatas As New Dictionary(Of String, String)()
-        Dim SplitedData As String() = ModifiedData.Split(New Char() {","c})
-
-        Dim i As Integer = 0
-        For Each sd As String In SplitedData
-            SubDatas(i) = sd
-            i += 1
-        Next
-
-        DataBase(SubDatas(0)) = ModifiedData
-
-        Console.ForegroundColor = ConsoleColor.Green
-        Console.WriteLine("Data is valid and stored")
-        Console.ResetColor()
-    End Sub
-
-
 
     Public Sub DisplayData()
         PrintOneLine("ID", "English", "Maths", "Science")
         RuleOff(52, "-")
 
-        Dim SumOfEnglish As Integer = 0
-        Dim AvgOfEnglish As Integer = 0
-        For Each record As StudentRecord In StudentRecords
-            SumOfEnglish += record.English
-            PrintOneLine(record.ID.ToString(),
+        If StudentRecords.Count > 0 Then
+            For Each record As StudentRecord In StudentRecords
+                PrintOneLine(record.ID.ToString(),
                          record.English.ToString(),
                          record.Math.ToString(),
                          record.Science.ToString())
-        Next
+            Next
 
-        If StudentRecords.Count > 0 Then
-            AvgOfEnglish = SumOfEnglish / StudentRecords.Count
+            Dim AvgEnglish As Integer = StudentRecords.Average(Function(r) r.English)
+            Dim MaxEnglish As Integer = StudentRecords.Max(Function(r) r.English)
+            Dim MinEnglish As Integer = StudentRecords.Min(Function(r) r.English)
+
+            Dim AvgMath As Integer = StudentRecords.Average(Function(r) r.Math)
+            Dim MaxMath As Integer = StudentRecords.Max(Function(r) r.Math)
+            Dim MinMath As Integer = StudentRecords.Min(Function(r) r.Math)
+
+            Dim AvgScience As Integer = StudentRecords.Average(Function(r) r.Science)
+            Dim MaxScience As Integer = StudentRecords.Max(Function(r) r.Science)
+            Dim MinScience As Integer = StudentRecords.Min(Function(r) r.Science)
+
             PrintOneLine("AVERAGE",
-             AvgOfEnglish.ToString(),
-             "2",
-             "3")
+             AvgEnglish.ToString(),
+             AvgMath.ToString(),
+             AvgScience.ToString())
+
+            PrintOneLine("MAX",
+             MaxEnglish.ToString(),
+             MaxMath.ToString(),
+             MaxScience.ToString())
+
+            PrintOneLine("MIN",
+             MinEnglish.ToString(),
+             MinMath.ToString(),
+             MinScience.ToString())
+        Else
+            PromptWithColor(ConsoleColor.Yellow, "No data has been stored yet")
         End If
     End Sub
 
@@ -244,24 +212,20 @@ Module Program
         Console.WriteLine(col1.PadRight(13, " ") +
                           col2.PadRight(13, " ") +
                           col3.PadRight(13, " ") +
-                          col4.PadRight(13, " ")
-                          )
-
+                          col4.PadRight(13, " "))
     End Sub
 
     Private Sub SearchData()
         Console.WriteLine("Enter student ID number to get specific results: ")
         Console.WriteLine("Displayed in format of (ID, Result_English, Result_Maths, Result_Science)")
         Dim SearchedID As String = Console.ReadLine()
-        Try
-            Console.ForegroundColor = ConsoleColor.Yellow
-            Console.WriteLine("Student " + SearchedID + "'s result details : " + DataBase(SearchedID))
-            Console.ResetColor()
-        Catch
-            Console.ForegroundColor = ConsoleColor.Red
-            Console.WriteLine("Student '" + SearchedID + "' Not Found")
-            Console.ResetColor()
-        End Try
+        Dim RecordFound As StudentRecord = StudentRecords.Find(Function(r) r.ID = SearchedID)
+
+        If IsNothing(RecordFound) = False Then
+            PromptWithColor(ConsoleColor.Yellow, "Student " + SearchedID + "'s result details : " + RecordFound.ToString)
+        Else
+            PromptWithColor(ConsoleColor.Red, "Student '" + SearchedID + "' Not Found")
+        End If
     End Sub
 
     'A linebreak function existing purely for visuals.
