@@ -41,7 +41,7 @@ the following is displayed:<br/>
 
 
 ### Selection 2 - Display
-Entering "2" from main menu prompt would display all stored data<br/>
+Entering "2" from main menu prompt would display all stored data along with its summay(Average, Max and Min<br/>
 Test Data:<br/>
   20100,50,63,77<br/>
   20101,55,69,82<br/>
@@ -54,7 +54,7 @@ Test Data:<br/>
   20108,78,82,100<br/>
   20109,40,60,40<br/>
 * Display output:<br/>
-<img src="https://user-images.githubusercontent.com/62463532/132928714-7f2e3c9b-66fe-4641-8e37-dbfb1db334ee.png" width="300" height="150"><br/>
+<img src="https://user-images.githubusercontent.com/62463532/132981817-d9926ea2-db33-4f02-b5e8-68af26e34311.png" width="410" height="240"><br/>
 * If some results entered were under 20 it is converted to 20 befored stored and displayed:<br/>
   e.g. 20300,19,1,21<br/>
   Display result:<br/>
