@@ -1,6 +1,7 @@
 # Mark-Analysis-System
 A system that records student marks, displays them and provides a search feature. <br/>
-Written by KeFx for school work.
+This branch uses classes and stores student data as objects therefore more effective than in the<br/>
+main branch. (This is created with help from my Dad.)
 
 How to run: 
  - Clone the whole repo
