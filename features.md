@@ -8,7 +8,7 @@ Written by KeFx for school work.
 This program is a Visual Basic console application that indefinitely loops a menu prompt when run and *only* exits <br/>
 when user enters the option "-1". Except for that, there are three available action options:<br/>
 1. Enter new data for a student,
-2. Display all data with average, min and max,
+2. Display all data. (**Note**: This version cannot calculate Average, Max and Min, For improved version see [Here](https://github.com/KeFx/Mark-Analysis-System/tree/OOVersion))
 3. Search for a student's data by ID number. <br/>
 
 <img src="https://user-images.githubusercontent.com/62463532/132792056-1e1df741-e02d-489f-8f81-6a994029c570.png" width="500" height="320"><br/>
@@ -41,7 +41,7 @@ the following is displayed:<br/>
 
 
 ### Selection 2 - Display
-Entering "2" from main menu prompt would display all stored data along with its summay(Average, Max and Min<br/>
+Entering "2" from main menu prompt would display all stored data.<br/>
 Test Data:<br/>
   20100,50,63,77<br/>
   20101,55,69,82<br/>
@@ -54,7 +54,7 @@ Test Data:<br/>
   20108,78,82,100<br/>
   20109,40,60,40<br/>
 * Display output:<br/>
-<img src="https://user-images.githubusercontent.com/62463532/132981817-d9926ea2-db33-4f02-b5e8-68af26e34311.png" width="410" height="240"><br/>
+* <img src="https://user-images.githubusercontent.com/62463532/132928714-7f2e3c9b-66fe-4641-8e37-dbfb1db334ee.png" width="300" height="150"><br/>
 * If some results entered were under 20 it is converted to 20 befored stored and displayed:<br/>
   e.g. 20300,19,1,21<br/>
   Display result:<br/>
